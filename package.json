@@ -1,16 +1,20 @@
 {
-  "name": "authback",
+  "name": "backend-fake-jwt",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "API de demonstração de autenticação JWT (cookie httpOnly) para o auth-front---angular",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "node --test"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^4.17.3",
-    "jsonwebtoken": "^8.5.1"
-  }
+    "cookie-parser": "^1.4.7",
+    "express": "^5.3.0",
+    "jsonwebtoken": "^9.0.3"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "index.js"
 }

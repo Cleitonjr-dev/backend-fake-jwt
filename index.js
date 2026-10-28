@@ -1,32 +1,24 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const jwt = require("jsonwebtoken");
-const cors = require("cors");
-const app = express();
-const port = 3000;
+const crypto = require("node:crypto");
+const { createApp } = require("./app");
 
-app.use(bodyParser.json());
-app.use(cors());
+const port = process.env.PORT || 3000;
+const isProduction = process.env.NODE_ENV === "production";
 
-app.post("/sign", (req, res) => {
-  const email = "cleitonjr.dev@gmail.com";
-  const password = "123";
-
-  if (req.body.email === email && req.body.password === password) {
-    const data = {
-      nome: "Cleiton Vasconcelos",
-      email,
-      role: ["sysAdmin"],
-    };
-
-    const token = jwt.sign({ data }, "SECRET", {
-      expiresIn: 100000,
-    });
-
-    return res.json({ token });
+let jwtSecret = process.env.JWT_SECRET;
+if (!jwtSecret) {
+  if (isProduction) {
+    console.error("JWT_SECRET é obrigatório em produção.");
+    process.exit(1);
   }
+  // Em desenvolvimento, um segredo aleatório por execução (as sessões não sobrevivem a um restart).
+  jwtSecret = crypto.randomBytes(32).toString("hex");
+}
 
-  res.status(500).json({ message: "Usuário ou senha incorreta" });
+const app = createApp({
+  jwtSecret,
+  demoEmail: process.env.DEMO_EMAIL || "teste@teste.com",
+  demoPassword: process.env.DEMO_PASSWORD || "123",
+  secureCookies: isProduction,
 });
 
 app.listen(port, () => {
