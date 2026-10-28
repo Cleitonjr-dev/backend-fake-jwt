@@ -41,3 +41,6 @@ npm test
 O arquivo `render.yaml` descreve o serviço para o [Render](https://render.com) (o `JWT_SECRET` é gerado no deploy).
 O front deve chamar a API pelo mesmo domínio do site, por meio de um proxy (veja o `netlify.toml` do front).
 Assim o cookie é de primeira parte e não depende de CORS.
+
+O passo a passo completo (publicar no Render, apontar o Netlify e testar o login real) está em
+[docs/DEPLOY.md do front](https://github.com/Cleitonjr-dev/auth-front---angular/blob/main/docs/DEPLOY.md).
